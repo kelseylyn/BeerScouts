@@ -63,7 +63,7 @@ def user_review_list(request, username=None):
     return render(request, 'reviews/user_review_list.html', context)
 
 
-@login_required
+#@login_required
 def user_recommendation_list(request):
 
     # get request user reviewed wines
