@@ -5,6 +5,10 @@ import numpy as np
 
 class Beer(models.Model):
     name = models.CharField(max_length=200)
+    abv = models.CharField(max_length=200)
+    ibu = models.CharField(max_length=200)
+    style = models.CharField(max_length=200)
+    ounces = models.CharField(max_length=200)
 
     #def average_rating(self):
         #all_ratings = map(lambda x: x.rating, self.review_set.all())
@@ -29,6 +33,7 @@ class Review(models.Model):
     user_name = models.CharField(max_length=100)
     comment = models.CharField(max_length=200)
     rating = models.IntegerField(choices=RATING_CHOICES)
+    #beer_style = models.CharField(max_length=100)
 
 #class Cluster(models.Model):
     #name = models.CharField(max_length=100)

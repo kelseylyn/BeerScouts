@@ -17,7 +17,7 @@ urlpatterns = [
     # ex: /review/user - get reviews for the logged user
     re_path(r'^review/user/(?P<username>\w+)/$', views.user_review_list, name='user_review_list'),
     re_path(r'^review/user/$', views.user_review_list, name='user_review_list'),
-
+    re_path(r'^recommendation/$', views.user_recommendation_list, name='user_recommendation_list'),
 
 ]
 app_name = 'reviews'
