@@ -1,0 +1,43 @@
+
+
+
+.jumbotron{
+
+border: 1px solid black;
+
+}
+
+body{
+  background-image:url("dad3.jpg");
+}
+
+h5{
+  font-style: oblique;
+}
+
+.container{
+  margin: auto;
+  width: 80%;
+  border: 1px solid black;
+  padding: 10px;
+  background-color: lightgray;
+  box-shadow: gray;
+}
+
+a{
+    color: black;
+}
+
+a:visited {
+  color: gray;
+}
+h1{
+  font-style: oblique;
+  align-items: center;
+}
+
+.indiv{
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+
+}
