@@ -1,34 +1,24 @@
-<html>
-  <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  {%load static%}
-  <link rel="stylesheet" href="{% static 'reviews/style.css'%}" type="text/css">
-</head>
-  <body>
-    <div class="overlord">
-    <div class="jumbotron">
-      <h1>Beer Scouts</h1>
-      <h4>Latest reviews</h4>
-    </div>
 
-<div class="container">
-    {% if latest_review_list %}
-    {% for review in latest_review_list %}
-    <div class="indiv">
-        <h5><a href="{% url 'reviews:review_detail' review.id %}">
-        {{ review.beer.name }}
-        </a></h5>
-        <h6>rated {{ review.rating }} of 5 by {{ review.user_name }}</h6>
-        <p>{{ review.comment }}</p>
-    </div>
-    {% endfor %}
-</div>
-{% else %}
-<p>No reviews are available.</p>
-{% endif %}
+{% extends 'base.html' %}
 
-</div>
-</body>
+  {% block title %}
+  <h2>Latest reviews</h2>
+  {% endblock %}
 
-
-</html>
+  {% block content %}
+  {% if latest_review_list %}
+  <div class="row">
+      {% for review in latest_review_list %}
+      <div class="col-xs-6 col-lg-4">
+          <h4><a href="{% url 'reviews:review_detail' review.id %}">
+          {{ review.beer.name }}
+          </a></h4>
+          <h6>Rated {{ review.rating }} of 5 by <a href="{% url 'reviews:user_review_list' review.user_name %}" >{{ review.user_name }}</a></h6>
+          <p>{{ review.comment }}</p>
+      </div>
+      {% endfor %}
+  </div>
+  {% else %}
+  <p>No reviews are available.</p>
+  {% endif %}
+  {% endblock %}
