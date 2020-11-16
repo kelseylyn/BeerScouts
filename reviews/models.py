@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Avg
 import numpy as np
+from django.contrib.auth.models import User
 
 
 class Beer(models.Model):
@@ -35,11 +36,11 @@ class Review(models.Model):
     rating = models.IntegerField(choices=RATING_CHOICES)
     #beer_style = models.CharField(max_length=100)
 
-#class Cluster(models.Model):
-    #name = models.CharField(max_length=100)
-    #users = models.ManyToManyField(User)
+class Cluster(models.Model):
+    name = models.CharField(max_length=100)
+    users = models.ManyToManyField(User)
 
-    #def get_members(self):
-        #return "\n".join([u.username for u in self.users.all()])
+    def get_members(self):
+        return "\n".join([u.username for u in self.users.all()])
 
 # Create your models here.

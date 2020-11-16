@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Beer, Review
+from .models import Beer, Review, Cluster
 # Register your models here.
 
 class ReviewAdmin(admin.ModelAdmin):
@@ -9,10 +9,10 @@ class ReviewAdmin(admin.ModelAdmin):
     list_filter = ['pub_date', 'user_name']
     search_fields = ['comment']
 
-#class ClusterAdmin(admin.ModelAdmin):
-    #model = Cluster
-    #list_display = ['name', 'get_members']
+class ClusterAdmin(admin.ModelAdmin):
+    model = Cluster
+    list_display = ['name', 'get_members']
 
 admin.site.register(Beer)
 admin.site.register(Review, ReviewAdmin)
-#admin.site.register(Cluster, ClusterAdmin)
+admin.site.register(Cluster, ClusterAdmin)

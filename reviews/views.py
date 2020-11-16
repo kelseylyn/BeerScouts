@@ -2,8 +2,9 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Review, Beer
+from .models import Review, Beer, Cluster
 from .forms import ReviewForm
+from .suggestions import update_clusters
 
 import datetime
 
@@ -47,6 +48,7 @@ def add_review(request, beer_id):
         review.comment = comment
         review.pub_date = datetime.datetime.now()
         review.save()
+        update_clusters()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
@@ -66,15 +68,15 @@ def user_review_list(request, username=None):
 #@login_required
 def user_recommendation_list(request):
 
-    # get request user reviewed wines
-    user_reviews = Review.objects.filter(user_name=request.user.username).prefetch_related('wine')
-    user_reviews_wine_ids = set(map(lambda x: x.wine.id, user_reviews))
+    # get request user reviewed beers
+    user_reviews = Review.objects.filter(user_name=request.user.username).prefetch_related('beer')
+    user_reviews_beer_ids = set(map(lambda x: x.beer.id, user_reviews))
 
     # get request user cluster name (just the first one righ now)
     try:
         user_cluster_name = \
             User.objects.get(username=request.user.username).cluster_set.first().name
-    except: # if no cluster assigned for a user, update clusters
+    except: # if no cluster has been assigned for a user, update clusters
         update_clusters()
         user_cluster_name = \
             User.objects.get(username=request.user.username).cluster_set.first().name
@@ -85,21 +87,21 @@ def user_recommendation_list(request):
             .exclude(username=request.user.username).all()
     other_members_usernames = set(map(lambda x: x.username, user_cluster_other_members))
 
-    # get reviews by those users, excluding wines reviewed by the request user
+    # get reviews by those users, excluding beers reviewed by the request user
     other_users_reviews = \
         Review.objects.filter(user_name__in=other_members_usernames) \
-            .exclude(wine__id__in=user_reviews_wine_ids)
-    other_users_reviews_wine_ids = set(map(lambda x: x.wine.id, other_users_reviews))
+            .exclude(beer__id__in=user_reviews_beer_ids)
+    other_users_reviews_beer_ids = set(map(lambda x: x.beer.id, other_users_reviews))
 
-    # then get a wine list including the previous IDs, order by rating
-    wine_list = sorted(
-        list(Wine.objects.filter(id__in=other_users_reviews_wine_ids)),
-        key=lambda x: x.average_rating,
+    # then get a beer list including the previous IDs, order by rating
+    beer_list = sorted(
+        list(Beer.objects.filter(id__in=other_users_reviews_beer_ids)),
+        key=lambda x: x.average_rating(),
         reverse=True
     )
 
     return render(
         request,
         'reviews/user_recommendation_list.html',
-        {'username': request.user.username,'wine_list': wine_list}
+        {'username': request.user.username,'beer_list': beer_list}
     )
