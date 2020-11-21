@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .models import Review, Beer, Cluster
 from .forms import ReviewForm
@@ -8,6 +9,8 @@ from .suggestions import update_clusters
 
 import datetime
 
+#def redirect_view(request):
+    #return redirect("/reviews/")
 
 def review_list(request):
     latest_review_list = Review.objects.order_by('-pub_date')[:9]
@@ -36,7 +39,10 @@ def beer_detail(request, beer_id):
 #@login_required
 def add_review(request, beer_id):
     beer = get_object_or_404(Beer, pk=beer_id)
-    form = ReviewForm(request.POST)
+    if request.POST:
+        form = ReviewForm(request.POST)
+    else:
+        form = ReviewForm()
     if form.is_valid():
         rating = form.cleaned_data['rating']
         comment = form.cleaned_data['comment']
@@ -72,7 +78,7 @@ def user_recommendation_list(request):
     user_reviews = Review.objects.filter(user_name=request.user.username).prefetch_related('beer')
     user_reviews_beer_ids = set(map(lambda x: x.beer.id, user_reviews))
 
-    # get request user cluster name (just the first one righ now)
+    # get request user cluster name (just the first one right now)
     try:
         user_cluster_name = \
             User.objects.get(username=request.user.username).cluster_set.first().name

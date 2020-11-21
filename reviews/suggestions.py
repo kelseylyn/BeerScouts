@@ -6,18 +6,19 @@ import numpy as np
 
 def update_clusters():
     num_reviews = Review.objects.count()
-    update_step = ((num_reviews/100)+1) * 5
-    if num_reviews % update_step == 0: # using some magic numbers here, sorry...
+    update_step = ((num_reviews/10)+1) * 5
+    if num_reviews % update_step != 0: # using some magic numbers here, sorry...
         # Create a sparse matrix from user reviews
-        all_user_names = map(lambda x: x.username, User.objects.only("username"))
+        all_user_names = list(map(lambda x: x.username, User.objects.only("username")))
+        num_users = 0
+        for i in all_user_names:
+            num_users = num_users + 1
         all_beer_ids = set(map(lambda x: x.beer.id, Review.objects.only("beer")))
-        num_users = len(all_user_names)
         ratings_m = dok_matrix((num_users, max(all_beer_ids)+1), dtype=np.float32)
         for i in range(num_users): # each user corresponds to a row, in the order of all_user_names
             user_reviews = Review.objects.filter(user_name=all_user_names[i])
             for user_review in user_reviews:
                 ratings_m[i,user_review.beer.id] = user_review.rating
-
         # Perform kmeans clustering
         k = int(num_users / 10) + 2
         kmeans = KMeans(n_clusters=k)

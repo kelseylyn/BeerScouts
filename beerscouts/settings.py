@@ -60,6 +60,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'beerscouts.urls'
 
 LOGIN_REDIRECT_URL = '/reviews/review/user'
+REGISTRATION_REDIRECT_URL = '/reviews'
 
 TEMPLATES = [
     {
