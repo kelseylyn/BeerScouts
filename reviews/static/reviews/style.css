@@ -8,7 +8,7 @@ border: 1px solid black;
 }
 
 body{
-  background-image:url("dad3.jpg");
+  background-image:url("scoutingreport.jpeg");
 }
 
 h5{
@@ -40,4 +40,8 @@ h1{
   border-bottom: 1px solid black;
   border-left: 1px solid black;
 
+}
+
+h4{
+  color: black;
 }
