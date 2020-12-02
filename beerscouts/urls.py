@@ -25,4 +25,5 @@ urlpatterns = [
     path('accounts/', include('registration.backends.simple.urls')),
     #path('accounts/', include('django.contrib.auth.urls', namespace="auth")),
     path('accounts/', include(('django.contrib.auth.urls','auth'), namespace="auth")),
+    path('chat/', include('chat.urls')),
 ]

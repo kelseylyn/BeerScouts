@@ -42,10 +42,14 @@ INSTALLED_APPS = [
     'bootstrap3',
     'reviews',
     'registration',
+    'chat',
+    'channels',
 ]
 
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
+
+ASGI_APPLICATION = 'beerscouts.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +82,16 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'beerscouts.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
 
 
 WSGI_APPLICATION = 'beerscouts.wsgi.application'
@@ -86,10 +100,14 @@ WSGI_APPLICATION = 'beerscouts.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'TEST': {
+            'NAME': os.path.join(BASE_DIR, 'db_test.sqlite3')
+        }
     }
 }
 
