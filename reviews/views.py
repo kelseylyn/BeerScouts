@@ -104,7 +104,7 @@ def user_recommendation_list(request):
         list(Beer.objects.filter(id__in=other_users_reviews_beer_ids)),
         key=lambda x: x.average_rating(),
         reverse=True
-    )
+    )[:9]
 
     return render(
         request,
