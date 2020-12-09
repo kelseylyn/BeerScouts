@@ -1,3 +1,4 @@
+# adapted from https://github.com/jadianes/winerama-recommender-tutorial
 from django.urls import path, re_path
 from  . import views
 

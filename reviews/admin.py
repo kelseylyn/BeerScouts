@@ -1,3 +1,4 @@
+# adapted from https://github.com/jadianes/winerama-recommender-tutorial
 from django.contrib import admin
 
 from .models import Beer, Review, Cluster

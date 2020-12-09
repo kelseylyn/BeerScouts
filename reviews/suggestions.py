@@ -1,3 +1,4 @@
+# adapted from https://github.com/jadianes/winerama-recommender-tutorial
 from .models import Review, Beer, Cluster
 from django.contrib.auth.models import User
 from sklearn.cluster import KMeans

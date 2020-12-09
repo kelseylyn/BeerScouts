@@ -1,3 +1,4 @@
+# adapted from https://github.com/jadianes/winerama-recommender-tutorial
 """
 WSGI config for beerscouts project.
 

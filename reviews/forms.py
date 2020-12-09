@@ -1,3 +1,4 @@
+# adapted from https://github.com/jadianes/winerama-recommender-tutorial
 from django.forms import ModelForm, Textarea
 from reviews.models import Review
 

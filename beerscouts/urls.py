@@ -1,3 +1,4 @@
+# adapted from https://github.com/jadianes/winerama-recommender-tutorial
 """beerscouts URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
