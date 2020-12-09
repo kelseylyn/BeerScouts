@@ -1,0 +1,9 @@
+martor
+gunicorn
+django-registration-redux
+django
+django-bootstrap3
+sklearn
+numpy
+django.utils.six
+pandas
